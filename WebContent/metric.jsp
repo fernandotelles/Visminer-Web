@@ -40,6 +40,16 @@ $(document).ready(function(){
 	});
 });
 </script>
+<style>
+	.node {
+	  border: solid 1px white;
+	  font: 10px sans-serif;
+	  line-height: 12px;
+	  overflow: hidden;
+	  position: absolute;
+	  text-indent: 2px;
+	}
+</style>
 </head>
 <body>
 	<%@include file='top.jsp' %>
@@ -57,6 +67,8 @@ $(document).ready(function(){
 						<select id="chartSelect" name="graphic" onchange="change();">
 							<option value="bubbleChart">Bubble Chart</option>
 							<option value="histogramChart">Histogram Chart</option>
+							<option value="treemapChart">Treemap Chart</option>
+							<!--<option value="">-->
 						</select>
 					</div>
 					<div>

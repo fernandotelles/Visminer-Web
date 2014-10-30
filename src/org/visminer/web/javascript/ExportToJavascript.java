@@ -23,6 +23,9 @@ public class ExportToJavascript {
 					+ "\n"
 					+ this.histogram(values, greater, metricName, metricDescription)
 					+ "\n"
+					+ "\n"
+					+ this.treemapChart(metricName, metricDescription)
+					+ "\n"
 					+ "</script>";
 		return chart;
 	}
@@ -179,6 +182,75 @@ public class ExportToJavascript {
 		+"//.text('Number');\n"
 		+"}";
 		return script;  	
+	}
+	
+	/**
+	 * 
+	 * @param metricName String containing name of metric
+	 * @param metricDescription String containing description of metric
+	 * @return String containing script of treemap chart
+	 */
+	
+	public String treemapChart(String metricName, String metricDescription){
+		String script = "function treemapChart(){"
+		+ "\n"
+		+ "var strong = document.createElement('strong');\n"
+		+ "var h4 = document.createElement('h4');\n"
+		+" var t = document.createTextNode('Treemap Chart of Metric "+metricName+" - "+metricDescription+"');\n"
+		+ "strong.appendChild(t);\n"
+		+ "h4.appendChild(strong);\n"
+		+ "var chart = document.getElementById('chart');\n"
+		+ "chart.appendChild(h4);\n"
+		+ "\n"
+		+ "var margin = {top: 40, right: 10, bottom: 10, left: 10},\n"
+		+ "width = 960 - margin.left - margin.right,\n"
+		+ "height = 500 - margin.top - margin.bottom;\n"
+		+ "var color = d3.scale.category20c();"
+		+ "\n"
+		+ "var treemap = d3.layout.treemap()\n"
+		+ "		.size([width, height])\n"
+		+ "		.sticky(true)\n"
+		+ "		.value(function(d) { return d.size; })\n;"
+		+ "\n"
+		+ "var div = d3.select('#chart').append('div')\n"
+		+ "		.style('position', 'relative')\n"
+		+ "		.style('width', (width + margin.left + margin.right) + 'px')\n"
+		+ "		.style('height', (height + margin.top + margin.bottom) + 'px')\n"
+		+ "		.style('left', margin.left + 'px')\n"
+		+ "		.style('top', margin.top + 'px');\n"
+		+ "\n"
+		+ "d3.json('chart.json', function(error, root) {\n"
+		+ "		var node = div.datum(root).selectAll('.node')\n"
+		+ "		.data(treemap.nodes)\n"
+		+ "		.enter().append('div')\n"
+		+ "		.attr('class', 'node')\n"
+		+ "		.call(position)\n"
+		+ "		.style('background', function(d) { return d.children ? color(d.name) : null; })\n"
+		+ "		.text(function(d) { return d.children ? null : d.name; });\n"
+		+ "\n"
+		+ "d3.selectAll('#metric').on('change', function change() { \n"
+		+ "var value = this.value === 'count' \n"
+		+ "? function() { return 1; } \n"
+		+ ": function(d) { return d.size; };\n"
+		+ " node \n"
+		+ "		.data(treemap.value(value).nodes) "
+		+ "		.transition() "
+		+ "		.duration(1500) "
+		+ "		.call(position); });"
+		+ "\n"
+		+ "});"
+		+ "\n"
+		+ "function position() {\n"
+		+ "this.style('left', function(d) { return d.x + 'px'; })\n"
+		+ ".style('top', function(d) { return d.y + 'px'; })\n"
+		+ ".style('width', function(d) { return Math.max(0, d.dx - 1) + 'px'; })\n"
+		+ ".style('height', function(d) { return Math.max(0, d.dy - 1) + 'px'; });\n"
+		+ "\n"
+		+ "}"
+		+ "\n"
+		+ "}";
+		
+		return script;
 	}
 
 }
