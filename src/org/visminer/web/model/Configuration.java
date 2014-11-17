@@ -12,6 +12,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,6 +30,11 @@ public class Configuration {
 	private boolean createTableFlag;
 	private String jdbc_user;
 	private String jdbc_password;
+	private String jdbc_driver;
+	private String jdbc_url;
+	private String jdbc_generation;
+	private String jdbc_logging;
+	private String configPath= "Visminer/config.properties";
 	
 	public Configuration() {
 		
@@ -128,6 +135,16 @@ public class Configuration {
 		Element jdbc = doc.createElement("jdbc");
 		rootElement.appendChild(jdbc);
 		
+		//jdbc_driver element;
+		Element eJD = doc.createElement("driver");
+		eJD.appendChild(doc.createTextNode(this.jdbc_driver));
+		jdbc.appendChild(eJD);
+
+		//jdbc_url element;
+		Element eJR = doc.createElement("url");
+		eJR.appendChild(doc.createTextNode(this.jdbc_url));
+		jdbc.appendChild(eJR);
+		
 		//jdbc_user element;
 		Element eJU = doc.createElement("user");
 		eJU.appendChild(doc.createTextNode(this.jdbc_user));
@@ -137,6 +154,16 @@ public class Configuration {
 		Element eJP = doc.createElement("password");
 		eJP.appendChild(doc.createTextNode(this.jdbc_password));
 		jdbc.appendChild(eJP);
+		
+		//jdbc_generation element;
+		Element eJG = doc.createElement("generation");
+		eJG.appendChild(doc.createTextNode(this.jdbc_generation));
+		jdbc.appendChild(eJG);
+
+		//jdbc_password element;
+		Element eJL = doc.createElement("logging");
+		eJL.appendChild(doc.createTextNode(this.jdbc_logging));
+		jdbc.appendChild(eJL);
 		/**** End JDBC node ****/
 		
 		// write the content into xml file
@@ -215,8 +242,13 @@ public class Configuration {
 			Node nNode = nList.item(temp);
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) nNode;
+				this.jdbc_driver = eElement.getElementsByTagName("driver").item(0).getTextContent();
+				this.jdbc_url = eElement.getElementsByTagName("url").item(0).getTextContent();
 				this.jdbc_user = eElement.getElementsByTagName("user").item(0).getTextContent();
 				this.jdbc_password = eElement.getElementsByTagName("password").item(0).getTextContent();
+				this.jdbc_generation = eElement.getElementsByTagName("generation").item(0).getTextContent();
+				this.jdbc_logging = eElement.getElementsByTagName("logging").item(0).getTextContent();
+				
 			}
 		}
 		
@@ -264,13 +296,40 @@ public class Configuration {
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElement = (Element) nNode;
 				str +=ln
-					+ tab + tab + "user           : " + eElement.getElementsByTagName("user").item(0).getTextContent() 
+					+ tab + tab + "driver           : " + eElement.getElementsByTagName("driver").item(0).getTextContent() 
 				    + ln
-					+ tab + tab + "password       : " + eElement.getElementsByTagName("password").item(0).getTextContent()
+				    + tab + tab + "url           : " + eElement.getElementsByTagName("url").item(0).getTextContent() 
+				    + ln
+				    + tab + tab + "user           : " + eElement.getElementsByTagName("user").item(0).getTextContent() 
+				    + ln
+				    + tab + tab + "password           : " + eElement.getElementsByTagName("password").item(0).getTextContent() 
+				    + ln
+					+ tab + tab + "generation           : " + eElement.getElementsByTagName("generation").item(0).getTextContent() 
+				    + ln
+					+ tab + tab + "logging       : " + eElement.getElementsByTagName("logging").item(0).getTextContent()
 					+ ln; 
 			}
 		}
 		return str;
+	}
+	
+	public void updateConfig(String jdbc_driver, String jdbc_url, String jdbc_user, String jdbc_password, String jdbc_generation, String jdbc_logging){
+		try{
+			PropertiesConfiguration config = new PropertiesConfiguration("config.properties");
+			
+			config.setProperty("jdbc.driver",jdbc_driver);
+			config.setProperty("jdbc.url", jdbc_url);
+			config.setProperty("jdbc.user", jdbc_user);
+			config.setProperty("jdbc.password", jdbc_password);
+			config.setProperty("jdbc.generation.strategy", jdbc_generation);
+			config.setProperty("jdbc.logging",jdbc_logging);
+			config.save();
+			
+		} catch (org.apache.commons.configuration.ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	// SET's and GET's 
@@ -330,7 +389,23 @@ public class Configuration {
 	public void setCreateTableFlag(boolean createTableFlag) {
 		this.createTableFlag = createTableFlag;
 	}
+	
+	public String getJdbc_driver() {
+		return jdbc_driver;
+	}
 
+	public void setJdbc_driver(String jdbc_driver) {
+		this.jdbc_driver = jdbc_driver;
+	}
+
+	public String getJdbc_url() {
+		return jdbc_url;
+	}
+
+	public void setJdbc_url(String jdbc_url) {
+		this.jdbc_url = jdbc_url;
+	}
+	
 	public String getJdbc_user() {
 		return jdbc_user;
 	}
@@ -346,6 +421,22 @@ public class Configuration {
 	public void setJdbc_password(String jdbc_password) {
 		this.jdbc_password = jdbc_password;
 	}
+	
+	public String getJdbc_generation() {
+		return jdbc_generation;
+	}
+
+	public void setJdbc_generation(String jdbc_generation) {
+		this.jdbc_generation = jdbc_generation;
+	}
+
+	public String getJdbc_logging() {
+		return jdbc_logging;
+	}
+
+	public void setJdbc_logging(String jdbc_logging) {
+		this.jdbc_logging = jdbc_logging;
+	}
 
 	@Override
 	public String toString() {
@@ -355,8 +446,10 @@ public class Configuration {
 				+ ", localRepositoryPath=" + localRepositoryPath
 				+ ", localRepositoryName=" + localRepositoryName
 				+ ", localRepositoryOwner=" + localRepositoryOwner
-				+ ", createTableFlag=" + createTableFlag + ", jdbc_user="
-				+ jdbc_user + ", jdbc_password=" + jdbc_password + "]";
+				+ ", createTableFlag=" + createTableFlag + ", jdbc_driver="
+				+ jdbc_driver + ", jdbc_url=" + jdbc_url +  ", jdbc_user="
+				+ jdbc_user + ", jdbc_password=" + jdbc_password +  ", jdbc_generation="
+				+ jdbc_generation + ", jdbc_logging=" + jdbc_logging + "]";
 	}
 	
 }
