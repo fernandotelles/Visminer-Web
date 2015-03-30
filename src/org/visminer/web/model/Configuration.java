@@ -12,7 +12,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -34,7 +34,8 @@ public class Configuration {
 	private String jdbc_url;
 	private String jdbc_generation;
 	private String jdbc_logging;
-	private String configPath= "Visminer/config.properties";
+	private String configPath;
+	
 	
 	public Configuration() {
 		
@@ -313,9 +314,16 @@ public class Configuration {
 		return str;
 	}
 	
-	public void updateConfig(String jdbc_driver, String jdbc_url, String jdbc_user, String jdbc_password, String jdbc_generation, String jdbc_logging){
+	public String updateConfig(String jdbc_driver, String jdbc_url, String jdbc_user, String jdbc_password, String jdbc_generation, String jdbc_logging) throws ConfigurationException{
+		
+		//Path to config.properties file
+		String path;
+		
+		PropertiesConfiguration config = new PropertiesConfiguration(this.configPath);
+		
 		try{
-			PropertiesConfiguration config = new PropertiesConfiguration("config.properties");
+			//InputStream configStream = getClass().getResourceAsStream(this.configPath);
+			
 			
 			config.setProperty("jdbc.driver",jdbc_driver);
 			config.setProperty("jdbc.url", jdbc_url);
@@ -325,11 +333,16 @@ public class Configuration {
 			config.setProperty("jdbc.logging",jdbc_logging);
 			config.save();
 			
+			
+			
 		} catch (org.apache.commons.configuration.ConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		path = config.getPath();
+		
+		return path;
 	}
 	
 	// SET's and GET's 
@@ -437,7 +450,15 @@ public class Configuration {
 	public void setJdbc_logging(String jdbc_logging) {
 		this.jdbc_logging = jdbc_logging;
 	}
-
+	
+	public String getConfigPath() {
+		return configPath;
+	}
+	
+	public void setConfigPath(String configPath) {
+		this.configPath = configPath;
+	}
+	
 	@Override
 	public String toString() {
 		return "Configuration [remoteRepositoryGit=" + remoteRepositoryGit

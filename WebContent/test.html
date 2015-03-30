@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+	<style>
+	body {
+	  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	  margin: auto;
+	  position: relative;
+	  width: 960px;
+	}
+	
+	form {
+	  position: absolute;
+	  right: 10px;
+	  top: 10px;
+	}
+	
+	.node {
+	  border: solid 1px white;
+	  font: 10px sans-serif;
+	  line-height: 12px;
+	  overflow: hidden;
+	  position: absolute;
+	  text-indent: 2px;
+	}
+	
+	</style>
+	<script src="js/d3.js"></script>
+	<script>
+	
+	var margin = {top: 40, right: 10, bottom: 10, left: 10},
+	    width = 960 - margin.left - margin.right,
+	    height = 500 - margin.top - margin.bottom;
+	
+	var color = d3.scale.category20c();
+	
+	var treemap = d3.layout.treemap()
+	.size([width, height])
+	.value(function(d) { return d.value })
+
+	
+	var div = d3.select("body").append("div")
+	    .style("position", "relative")
+	    .style("width", (width + margin.left + margin.right) + "px")
+	    .style("height", (height + margin.top + margin.bottom) + "px")
+	    .style("left", margin.left + "px")
+	    .style("top", margin.top + "px");
+	
+	d3.json("novo.json", function(error,root) {		
+				
+		console.log(root);
+		
+	})
+	</script>
+</head>
+<body>
+
+</body>
+</html>

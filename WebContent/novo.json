@@ -1,0 +1,87 @@
+{
+    "name": "Visminer Repository",
+    "children": [
+        {
+            "name": "Visminer Project",
+            "children": [
+                {
+                    "name": "Visminer Packages",
+                    "children": [
+                        {
+                            "name": "Config",
+                            "value": 10,
+                            "children":
+                            [
+                                {
+                                    "name":"ConfigProperties",
+                                    "value":20,
+                                    "children": 
+                                    [
+                                        {
+                                            "name": "ConfigProperties",
+                                            "value": 39
+                                        }
+
+                                    ]
+                                },
+                                {
+                                    "name":"Configuration",
+                                    "value": 21,
+                                    "children":
+                                    [
+                                        {
+                                            "name": "Configure",
+                                            "value": 46
+                                        },
+                                        {
+                                            "name": "SetCfgValues",
+                                            "value": 47
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name":"MetricAttribute",
+                                    "value": 22,
+                                    "children":
+                                    [
+                                        {
+                                            "name": "MetricAttribute",
+                                            "value": 59
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name":"MetricsConfig",
+                                    "value": 23,
+                                    "children":
+                                    [
+                                        {
+                                            "name": "Configure",
+                                            "value": 65
+                                        },
+                                        {
+                                            "name": "GetData",
+                                            "value": 66
+                                        },
+                                        {
+                                            "name": "GetMetric",
+                                            "value": 89
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name":"Constant",
+                            "value": 11
+                        }, 
+                        {
+                            "name":"extractor",
+                            "value": 12
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

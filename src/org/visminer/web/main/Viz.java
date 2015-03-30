@@ -1,12 +1,20 @@
 package org.visminer.web.main;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
+
+import org.apache.commons.configuration.ConfigurationException;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.visminer.git.remote.GitHub;
-import org.visminer.main.VisMiner;
+import org.visminer.constant.RemoteServiceType;
+import org.visminer.constant.RepositoryType;
+import org.visminer.constant.RemoteServiceType;
+import org.visminer.constant.RepositoryType;
+//import org.visminer.main.VisMiner;
+import org.visminer.main.Visminer;
 import org.visminer.web.model.Configuration;
 
 public class Viz {
@@ -23,14 +31,16 @@ public class Viz {
     
     //Persistence properties using in database connection
     private String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	private String JDBC_URL = "jdbc:mysql://localhost/";
+	private String JDBC_URL = "jdbc:mysql://localhost/visminer3";
 	private String JDBC_USER;
-	private String JDBC_PASSWORD; 
+	private String JDBC_PASSWORD;
+	private String JDBC_GENERATION = "drop-and-create-tables";
+	private String JDBC_LOGGING = "off"; 
 	
     private boolean createTableFlag; //flag to indicate whether to create tables or not.
     
     //instance of VisMiner API
-    protected VisMiner visminer;
+    //protected VisMiner visminer;
     
     /**
 	 * 
@@ -55,7 +65,7 @@ public class Viz {
         LOCAL_REPOSITORY_NAME 	= cfg.getLocalRepositoryName();
         LOCAL_REPOSITORY_OWNER  = cfg.getLocalRepositoryOwner();
     	JDBC_USER				= cfg.getJdbc_user();
-    	JDBC_PASSWORD			= cfg.getJdbc_password(); 
+    	JDBC_PASSWORD			= cfg.getJdbc_password();
     	createTableFlag 		= cfg.isCreateTableFlag();
 	}
 	
@@ -66,8 +76,11 @@ public class Viz {
     /**
      * 
      * @return a variable of type VisMiner.
+     * @throws ConfigurationException 
      */
-	public VisMiner getVisminer() throws IOException, GitAPIException{		
+	public void getVisminer() throws IOException, GitAPIException{		
+		
+		/*
 		Map<String, String> props = new HashMap<String, String>();
 		props.put(VisMiner.JDBC_DRIVER, JDBC_DRIVER);
     	props.put(VisMiner.JDBC_URL, JDBC_URL);
@@ -88,8 +101,41 @@ public class Viz {
 		remote_cfg.put(VisMiner.REMOTE_REPOSITORY_LOGIN,REMOTE_REPOSITORY_USER);
 		remote_cfg.put(VisMiner.REMOTE_REPOSITORY_PASSWORD, REMOTE_REPOSITORY_PASSWORD);
 		remote_cfg.put(VisMiner.REMOTE_REPOSITORY_GIT,new GitHub());
-
-		return new VisMiner(props,local_cfg,remote_cfg);
+		*/
+		
+		URL resource = getClass().getResource("/");
+		String configPath = resource.getPath();
+		configPath = configPath.replace("WEB-INF/classes/", "config.properties");
+		
+		
+		URL resourceXML= getClass().getResource("/");
+		String metricPath = resourceXML.getPath();
+		metricPath = metricPath.replace("WEB-INF/classes/", "metrics.xml");
+		
+		//Set database configuration properties
+		Configuration dbConfig = new Configuration();
+		
+		
+		try {
+			//resource = dbConfig.updateConfig(this.JDBC_DRIVER, this.JDBC_URL, this.JDBC_USER, this.JDBC_PASSWORD, this.JDBC_GENERATION, this.JDBC_LOGGING);
+			
+			//Visminer Class Instantiation
+			Visminer visminer = new Visminer();
+			visminer.configure(configPath);
+			visminer.configureMetrics(metricPath);
+			
+			visminer.getAnalyzer().setRepositoryName(this.LOCAL_REPOSITORY_NAME)
+			                      .setRepositoryPath(this.LOCAL_REPOSITORY_PATH)
+			                      .setRepositoryRemoteName(this.LOCAL_REPOSITORY_NAME)
+			                      .setRepositoryRemoteOwner(this.REMOTE_REPOSITORY_USER)
+			                      .setRepositoryRemoteType(RemoteServiceType.GITHUB)
+			                      .setRepositoryType(RepositoryType.GIT);
+			
+			//return new VisMiner(props,local_cfg,remote_cfg);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getREMOTE_REPOSITORY_GIT() {
@@ -138,8 +184,8 @@ public class Viz {
 				+ ", LOCAL_REPOSITORY_OWNER=" + LOCAL_REPOSITORY_OWNER
 				+ ", JDBC_DRIVER=" + JDBC_DRIVER + ", JDBC_URL=" + JDBC_URL
 				+ ", JDBC_USER=" + JDBC_USER + ", JDBC_PASSWORD="
-				+ JDBC_PASSWORD + ", createTableFlag=" + createTableFlag
-				+ ", visminer=" + visminer + "]";
+				+ JDBC_PASSWORD + ", createTableFlag=" + createTableFlag + "]";
+				//+ ", visminer=" + visminer + "]";
 	}
 	
 }

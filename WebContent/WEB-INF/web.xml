@@ -68,4 +68,13 @@
 		<servlet-name>welcome</servlet-name>
 		<url-pattern>/welcome.do</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>DeveloperVis</servlet-name>
+		<servlet-class>org.visminer.web.servlet.DeveloperVis</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>DeveloperVis</servlet-name>
+		<url-pattern>/developerVis.do</url-pattern>
+	</servlet-mapping>
 </web-app>

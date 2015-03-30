@@ -2,6 +2,7 @@ package org.visminer.web.filter;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,7 +18,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.visminer.main.VisMiner;
+//import org.visminer.main.VisMiner;
+import org.visminer.main.Visminer;
 import org.visminer.web.main.Viz;
 import org.visminer.web.model.Configuration;
 import org.xml.sax.SAXException;
@@ -46,16 +48,30 @@ public class Main implements Filter {
 		HttpSession session = ((HttpServletRequest)(request)).getSession();
 		HttpServletResponse res = (HttpServletResponse) response;
 		File XmlFile = new File("config.xml");
+		
+		
 		if(!XmlFile.exists()){
 			String redirect = ((HttpServletRequest)(request)).getContextPath()+"/index.cfg";
 			res.sendRedirect(redirect);
 		}else{
 			try{
 				Configuration cfg = new Configuration(XmlFile);
-				VisMiner vm = (VisMiner)session.getAttribute("visminer");		
+				Visminer vm = (Visminer)session.getAttribute("visminer");
 				if(vm==null){
+					
+					//get absolute path and replace with wanted file path.
+					URL resource = getClass().getResource("/");
+					String path = resource.getPath();
+					path = path.replace("WEB-INF/classes/", "config.properties");
+					
+					cfg.setConfigPath(path);
+					
 					Viz viz = new Viz(cfg);
-					vm = viz.getVisminer();
+					viz.getVisminer();
+					
+					/* TODO refactor this method
+					*/
+					
 					//If created the tables, set flag to false, 
 					//case the server is restarted, 
 					//it do not try to create the tables again.

@@ -9,6 +9,7 @@
 					<li><a href="metric.do">Metric</a></li>
 					<li><a href="issuesStatus.do">Issues Status</a></li>
 					<li><a href="issuesQuantity.do">Issues Quantity</a></li>
+					<li><a href="developerVis.do">Visualizations for developers</a></li>
 				</ul>
 			</div>
 		</div>
