@@ -78,7 +78,7 @@ public class Viz {
      * @return a variable of type VisMiner.
      * @throws ConfigurationException 
      */
-	public void getVisminer() throws IOException, GitAPIException{		
+	public Visminer getVisminer() throws IOException, GitAPIException{		
 		
 		/*
 		Map<String, String> props = new HashMap<String, String>();
@@ -131,10 +131,11 @@ public class Viz {
 			                      .setRepositoryRemoteType(RemoteServiceType.GITHUB)
 			                      .setRepositoryType(RepositoryType.GIT);
 			
-			//return new VisMiner(props,local_cfg,remote_cfg);
+			return visminer;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 	}
 

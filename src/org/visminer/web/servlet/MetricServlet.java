@@ -1,6 +1,7 @@
 package org.visminer.web.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.visminer.main.VisMiner;
-import org.visminer.model.Metric;
-import org.visminer.model.MetricValue;
+import org.visminer.main.Visminer;
+import org.visminer.model.business.Metric;
+import org.visminer.model.database.MetricValue;
 import org.visminer.web.model.Graphic;
 
 /**
@@ -34,7 +35,7 @@ public class MetricServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		VisMiner vm = (VisMiner)session.getAttribute("visminer");
+		Visminer vm = (Visminer)session.getAttribute("visminer");
 
 		String metricChosen = request.getParameter("m");
 		if(metricChosen == null){
@@ -50,13 +51,16 @@ public class MetricServlet extends HttpServlet {
 		}
 
 		//getting the chosen metric
-		Metric chosen = vm.getMetric(metricChosen);
-
+		List<Metric> chosen =  vm.getMetrics();
+		
+		//getMetricValues()
+		//getValue()
+		
 		//getting the most value from the value of the metric
 		double greater = 1;
-		for(MetricValue mv : chosen.getMetricValues()){
+		for(Metric mv : chosen.get(i).getValue()){
 			//verifies that the value of metricValue is greater than the last value is set higher and the file exists because of the LOC TAG
-			if(mv.getValue() > greater){
+			if((double)mv.getValue() > greater){
 				greater = mv.getValue();
 			}
 		}

@@ -347,6 +347,13 @@ public class Configuration {
 	
 	// SET's and GET's 
 	
+	
+	public void deleteConfigFile(){
+		File configFile = new File("config.xml");
+		if(configFile.exists())
+			configFile.delete();
+	}
+	
 	public String getLocalRepositoryPath() {
 		return localRepositoryPath;
 	}

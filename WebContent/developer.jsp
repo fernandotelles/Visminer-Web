@@ -58,16 +58,18 @@ form {
 
 
 .tooltip{
-	position: absolute;           
-	text-align: center;           
-	width: 60px;                  
-	height: 28px;                 
-	padding: 2px;             
-	font: 12px sans-serif;        
-	background: lightsteelblue;   
-	border: 0px;      
-	border-radius: 2px;           
-	pointer-events: none;      
+	background: #eee;
+	box-shadow: 0 0 5px #999999;
+	color: #333;
+	display: none; 
+	font-size: 12px;
+	left: 130px;
+	padding: 10px;
+	position: absolute;
+	text-align: center;
+	top: 95px;
+	width: 80px;
+	/*z-index: 10;*/   
 }
 
 /* Developers */
@@ -82,6 +84,15 @@ form {
 
 .dev
 
+#navtop{
+
+	margin-bottom: 0px;
+}
+
+#jumbo{
+	padding: 20px 30px 20px 30px;
+}
+
 </style>
 
 </head>
@@ -89,9 +100,24 @@ form {
 <body>
 
 <div class="col-md-12">
-	<!-- <div class="nav navbar"></div> -->
-	<div class="jumbotron">
-		<div class="container">
+	<nav class="navbar navbar-inverse collapse navbar-collapse" id="navtop" >
+		<div class="container-fluid" >
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"> Visminer </a>
+			</div>
+			<div class="container">
+				<ul class="nav navbar-nav">
+					<li><a href="metric.do">Metric</a></li>
+					<li><a href="issuesStatus.do">Issues Status</a></li>
+					<li><a href="issuesQuantity.do">Issues Quantity</a></li>
+					<li><a href="developerVis.do">Visualizations for developers</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="jumbotron" id="jumbo">
+		<div class="">
 			<h2>Hello World!</h2>
 			<p> Esta é uma demonstração da visualização para desenvolvedores</p>		
 		</div>
@@ -109,7 +135,7 @@ form {
 				<dl> 
 					<dd id="id_dev"class="dev">Developers here</dd>
 					<dd id="id_dev"class="dev">Developers here1</dd>
-					<% 
+					<%-- <% 
 					//Visminer visminer = new Visminer();
 					
 					//visminer.configure("config.properties");
@@ -127,13 +153,14 @@ form {
 					
 					for(Committer c : v.getCommitters()){
 						System.out.println(c.getName());
-						*/
 						
+						*/
 						List<Committer> cm = (List<Committer>) request.getAttribute("committers");
 						for(Committer c: cm){
 					%>
 					<dd id="id_dev"class="dev"><%=%></dd>
-					<%} %>
+					<%} %> --%>
+					
 				</dl>	
 			</div>
 			<div class="panel-footer">
@@ -150,9 +177,9 @@ form {
 				</h3>
 			</div>
 			<div id="visu" class="panel-body">
-				<p>Visualização aqui</p>
-				<div id="chart" class="col-md-6">
-					
+				<div class="container col-md-12">
+					<div id="chart" class="col-md-12">
+					</div>
 				</div>
 			</div>
 			<!-- <div class="panel-footer">
@@ -210,9 +237,9 @@ var div = d3.select("#chart").append("div")
 var tooltip = d3.select("#chart").append("div")
 	.attr("class","tooltip")
 	.style("opacity",0);
-
+    
 /* Load external data */
-d3.json("novo.json", function(error,root) {		
+d3.json("flare.json", function(error,root) {		
 	var node = div.datum(root).selectAll(".node")
     .data(treemap.nodes)
   .enter().append("a")

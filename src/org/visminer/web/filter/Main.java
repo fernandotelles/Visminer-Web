@@ -20,6 +20,7 @@ import javax.xml.transform.TransformerException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 //import org.visminer.main.VisMiner;
 import org.visminer.main.Visminer;
+import org.visminer.web.main.VisminerWeb;
 import org.visminer.web.main.Viz;
 import org.visminer.web.model.Configuration;
 import org.xml.sax.SAXException;
@@ -66,8 +67,9 @@ public class Main implements Filter {
 					
 					cfg.setConfigPath(path);
 					
-					Viz viz = new Viz(cfg);
-					viz.getVisminer();
+					/*Viz viz = new Viz(cfg);
+					vm = viz.getVisminer();*/
+					vm = VisminerWeb.getInstance().getVisminer(); 
 					
 					/* TODO refactor this method
 					*/
@@ -86,10 +88,10 @@ public class Main implements Filter {
 				e.printStackTrace();
 			} catch (SAXException e) {
 				e.printStackTrace();
-			} catch (GitAPIException e) {
+			} /*catch (GitAPIException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (TransformerException e) {
+			}*/ catch (TransformerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
