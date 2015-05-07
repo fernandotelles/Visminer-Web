@@ -5,6 +5,7 @@
 <%@page import="org.visminer.model.database.Committer" %>
 <%@page import="org.visminer.main.Visminer" %>
 <%@page import="org.visminer.model.business.Repository"%>
+<%@page import="org.visminer.model.business.File"%>
 <%@page import="org.visminer.constant.RemoteServiceType"%>
 <%@page import="org.visminer.constant.RepositoryType"%>
 <%@ page import="java.util.List"%>
@@ -13,7 +14,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Visualização Para Desenvolvedores</title>
+<title>Visualização de arquivos</title>
 
 <link rel="stylesheet" href="css/bootstrap.css">
 <script src="js/d3.v3.min.js"></script>
@@ -154,6 +155,9 @@ form {
 				<div class="container col-md-12">
 					<dl>
 						<dd> Files </dd>
+						<c:forEach items= "${sessionScope.files}" var="file">
+							<dd> ${file.path} </dd>
+						</c:forEach>
 					</dl>
 				</div>
 			</div>
@@ -171,7 +175,7 @@ form {
 				</h3>
 			</div>
 			<div class="panel-body">
-				<p>=D</p>
+				<p></p>
 			</div>
 			<div class="panel-footer">
 				<p> Footer </p>

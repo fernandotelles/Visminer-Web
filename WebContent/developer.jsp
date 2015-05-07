@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@page import="org.visminer.persistence.CommitterDAO" %>
-<%-- <%@page import="org.visminer.model.business.Committer" %> --%>
-<%@page import="org.visminer.model.database.Committer" %>
+<%@page import="org.visminer.model.business.Committer" %>
 <%@page import="org.visminer.main.Visminer" %>
 <%@page import="org.visminer.model.business.Repository"%>
 <%@page import="org.visminer.constant.RemoteServiceType"%>
@@ -135,33 +133,23 @@ form {
 				<dl> 
 					<dd id="id_dev"class="dev">Developers here</dd>
 					<dd id="id_dev"class="dev">Developers here1</dd>
-					<%-- <% 
-					//Visminer visminer = new Visminer();
+					<c:forEach items="${sessionScope.committers}" var="committer">
+						<dd id="id_dev"class="dev">${committer.name}</dd>
+					</c:forEach>
+					<dd>
+						<% if (request.getAttribute("committers") == null)
+								System.out.println("Nao Passou");
+						else
+							System.out.println(request.getAttribute("committers"));
+						%>
+					</dd>
 					
-					//visminer.configure("config.properties");
-					//visminer.configureMetrics("metrics.xml");
-					
-					/*visminer.getAnalyzer().setRepositoryName("visminer")
-					                      .setRepositoryPath("/home/fernandoteles/Visminer/.git")
-					                      .setRepositoryRemoteName("visminer")
-					                      .setRepositoryRemoteOwner("fernandotelles")
-					                      .setRepositoryRemoteType(RemoteServiceType.GITHUB)
-					                      .setRepositoryType(RepositoryType.GIT);
-					
-					
-					Repository v = visminer.analyze();
-					
-					for(Committer c : v.getCommitters()){
-						System.out.println(c.getName());
-						
-						*/
-						List<Committer> cm = (List<Committer>) request.getAttribute("committers");
-						for(Committer c: cm){
-					%>
-					<dd id="id_dev"class="dev"><%=%></dd>
-					<%} %> --%>
-					
-				</dl>	
+				</dl>
+				<ul>
+					<c:forEach items="${committers}" var="committer">
+						<li id="id_dev"class="dev">${committer.name}</li>
+					</c:forEach>
+				</ul>
 			</div>
 			<div class="panel-footer">
 				<p>Footer</p>

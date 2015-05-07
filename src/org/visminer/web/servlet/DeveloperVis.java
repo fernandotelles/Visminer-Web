@@ -47,7 +47,6 @@ public class DeveloperVis extends HttpServlet {
 		List<Committer> committers = vm.getCommitters();
 			
 		request.setAttribute("committers", committers);
-		//request.setAttribute(arg0, arg1);
 		request.getRequestDispatcher("/developer.jsp").forward(request,response);
 	}
 

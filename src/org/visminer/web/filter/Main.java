@@ -50,7 +50,6 @@ public class Main implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		File XmlFile = new File("config.xml");
 		
-		
 		if(!XmlFile.exists()){
 			String redirect = ((HttpServletRequest)(request)).getContextPath()+"/index.cfg";
 			res.sendRedirect(redirect);
@@ -60,19 +59,7 @@ public class Main implements Filter {
 				Visminer vm = (Visminer)session.getAttribute("visminer");
 				if(vm==null){
 					
-					//get absolute path and replace with wanted file path.
-					URL resource = getClass().getResource("/");
-					String path = resource.getPath();
-					path = path.replace("WEB-INF/classes/", "config.properties");
-					
-					cfg.setConfigPath(path);
-					
-					/*Viz viz = new Viz(cfg);
-					vm = viz.getVisminer();*/
 					vm = VisminerWeb.getInstance().getVisminer(); 
-					
-					/* TODO refactor this method
-					*/
 					
 					//If created the tables, set flag to false, 
 					//case the server is restarted, 

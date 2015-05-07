@@ -1,6 +1,7 @@
 package org.visminer.web.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.visminer.main.Visminer;
+import org.visminer.model.business.File;
+import org.visminer.model.business.Repository;
 
 /**
  * Servlet implementation class FileServlet
@@ -40,7 +43,16 @@ public class FileServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		HttpSession session = (Visminer) request.getSession();
+		HttpSession session = request.getSession();
+		
+		Visminer vm = (Visminer) session.getAttribute("visminer");
+		
+		Repository repo = vm.getRepositories().get(0);
+		
+		List<File> files = repo.getFiles();
+		
+		request.setAttribute("files", files);
+		request.getRequestDispatcher("/file.jsp").forward(request,response);
 	}
 
 }
