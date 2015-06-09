@@ -252,5 +252,20 @@ public class ExportToJavascript {
 		
 		return script;
 	}
+	
+	public String barChart(int data[]){
+		String script;
+		
+		script = "var chart = document.getElementById=\"chart\""
+				+ "d3.select(\"chart\")"
+				+ " .selectAll(\"div\")"
+				+ " 	.data(\"data\")"
+				+ "	.enter().append(\"div\")"
+				+ "  .style(\"width\", function(d){ return x(d) + \"px\"; })"
+				+ "	 .text(function(d){ return d; })";
+		
+		
+		return script;
+	}
 
 }

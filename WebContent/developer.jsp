@@ -20,6 +20,15 @@
 
 <style>
 
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
 #visu {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: auto;
@@ -131,25 +140,10 @@ form {
 			</div>
 			<div class="panel-body">
 				<dl> 
-					<dd id="id_dev"class="dev">Developers here</dd>
-					<dd id="id_dev"class="dev">Developers here1</dd>
-					<c:forEach items="${sessionScope.committers}" var="committer">
+					<c:forEach items="${committers}" var="committer">
 						<dd id="id_dev"class="dev">${committer.name}</dd>
 					</c:forEach>
-					<dd>
-						<% if (request.getAttribute("committers") == null)
-								System.out.println("Nao Passou");
-						else
-							System.out.println(request.getAttribute("committers"));
-						%>
-					</dd>
-					
 				</dl>
-				<ul>
-					<c:forEach items="${committers}" var="committer">
-						<li id="id_dev"class="dev">${committer.name}</li>
-					</c:forEach>
-				</ul>
 			</div>
 			<div class="panel-footer">
 				<p>Footer</p>
@@ -191,97 +185,39 @@ form {
 			</div>
 		</div>
 	</div>
+	
 </div>
 
 <script>
-
-/* Set margin, width and height of the visualization */
-var margin = {top: 40, right: 10, bottom: 10, left: 10},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-	
-	var chart = document.getElementById("chart");
-	var Awidth = chart.offsetWidth - margin.left - margin.right, 
-		Aheight = chart.offsetWidth - margin.top - margin.bottom;
-	
+var data;
 var color = d3.scale.category20c();
+var temp;
 
-/*Choose the visualization's layout */
-var treemap = d3.layout.treemap()
-.size([Awidth, Aheight])
-.value(function(d) { return d.value })
-/*Se for testar com o arquivo flare.json, utilizar size. */
+var width = document.getElementById('chart').offsetWidth;
 
-
-var div = d3.select("#chart").append("div")
-    .style("position", "relative")
-    .style("width", (Awidth + margin.left + margin.right) + "px")
-    .style("height", (Aheight + margin.top + margin.bottom) + "px")
- /* .style("left", margin.left + "px")
-    .style("top", margin.top + "px"); */
-
-/* Tooltip */
-
-var tooltip = d3.select("#chart").append("div")
-	.attr("class","tooltip")
-	.style("opacity",0);
-    
-/* Load external data */
-d3.json("flare.json", function(error,root) {		
-	var node = div.datum(root).selectAll(".node")
-    .data(treemap.nodes)
-  .enter().append("a")
-  	.attr("class","entity")
-  	.attr("href",function(d){return "/" + d.name + "/";})
-  	.attr("id",function(d){return d.name})
-  	.append("div")
-    .attr("class", "node")
-    .call(position)
-    .style("background", function(d) { return d.children ? color(d.name) : null; })
-    .text(function(d) { return d.children ? null : d.name; })
-		.on("mouseover",function(d){
-			tooltip.transition()
-			.duration(300)
-			.style("opacity",.9)
-			 tooltip.html("Nome: "+ d.name + " Profundidade: "+ d.depth)  
-                .style("left", d3.mouse + "px")     
-                .style("top", (d3.mouse - 28) + "px");;
-		})
-		.on("mouseout",function(d){
-			tooltip.transition()
-			.duration(300)
-			.style("opacity", 0);
-		});
+d3.json("flare10.json",function(error,json){
+	if(error) 
+		return console.warn(error);
+	data = json;
 	
-	// Criar aqui o zoom através do click na função
-	d3.selectAll(".node").on("click", function(){
-		//d3.behavior.zoom()
-	})
-	
-	/* Transitions */
-	d3.selectAll("input").on("change", function change() {
-	  var value = this.value === "count"
-	      ? function() { return 1; }
-	      : function(d) { return d.size; };
-	
-	  node
-	      .data(treemap.value(value).nodes)
-	    .transition()
-	      .duration(1500)
-	      .call(position);
-	});
+	values = d3.values(data);
+	var maxsize = d3.max(values);
+	//console.log(maxsize);
+	var x = d3.scale.linear()
+	.domain([0, maxsize])
+	.range([0, width]);
 
+	d3.select("#chart")
+	.selectAll("div")
+		.data(values)
+	.enter().append("div")
+		.style("width", function(d){ return x(d) + "px"; })
+		.style("background", function(d){ return color(d) })
+		.style("margin","0px 0px 1px 0px")
+		.text(function(d){ return d; });
 });
 
-	function position() {
-	this.style("left", function(d) { return d.x + "px"; })
-	    .style("top", function(d) { return d.y + "px"; })
-	    .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
-	    .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
-	
-}
-	
-	
+
 </script>
 
 </body>

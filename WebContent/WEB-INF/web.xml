@@ -71,7 +71,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>DeveloperVis</servlet-name>
-    <url-pattern>/developerVis.do</url-pattern>
+    <url-pattern>/developer.do</url-pattern>
   </servlet-mapping>
   <servlet>
   	<servlet-name>FileServlet</servlet-name>

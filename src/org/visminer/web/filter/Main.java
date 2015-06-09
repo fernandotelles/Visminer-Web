@@ -20,6 +20,7 @@ import javax.xml.transform.TransformerException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 //import org.visminer.main.VisMiner;
 import org.visminer.main.Visminer;
+import org.visminer.model.business.Repository;
 import org.visminer.web.main.VisminerWeb;
 import org.visminer.web.main.Viz;
 import org.visminer.web.model.Configuration;
@@ -60,6 +61,7 @@ public class Main implements Filter {
 				if(vm==null){
 					
 					vm = VisminerWeb.getInstance().getVisminer(); 
+					
 					
 					//If created the tables, set flag to false, 
 					//case the server is restarted, 

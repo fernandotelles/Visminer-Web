@@ -94,6 +94,14 @@ form {
 	padding: 20px 30px 20px 30px;
 }
 
+
+/* Buttons */
+
+.button_files{
+	width: 30%;
+	margin: 0 auto;
+}
+
 </style>
 
 </head>
@@ -145,25 +153,38 @@ form {
 	</div>
 	<!-- Visualização -->
 	<div class="container col-md-6">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title"> 
-					Visualização
-				</h3>
-			</div>
-			<div id="visu" class="panel-body">
-				<div class="container col-md-12">
-					<dl>
-						<dd> Files </dd>
-						<c:forEach items= "${sessionScope.files}" var="file">
-							<dd> ${file.path} </dd>
-						</c:forEach>
-					</dl>
+		<div  id="java_files" class="container col-md-12 arquivos">
+			<h3>All Java Files and metrics Here</h3>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"> 
+						Lista todos os arquivos e suas respectivas metricas
+					</h3>
+				</div>
+				<div id="visu" class="panel-body">
+					<div class="container col-md-12">
+						<table>
+							<th>File</th>
+							<th>Metrics</th>
+							<c:forEach items="${files}" var="file">
+								<tr>
+									<td>${file.path}</td>
+									<td>[LOC,NOC,NOM]</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+				</div>
+					
+				<div class="panel-footer">
+					<div class = "button_files">
+						<input type="button" value="|<" name = "first"></input>
+						<input type="button" value="<<" name = "previous"></input>
+						<input type="button" value=">>" name = "next"></input>
+						<input type="button" value=">|" name = "last"></input>
+					</div>
 				</div>
 			</div>
-			<!-- <div class="panel-footer">
-				<p> footer </p>
-			</div> -->
 		</div>
 	</div>
 	

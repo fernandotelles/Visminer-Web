@@ -10,7 +10,7 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.visminer.model.MetricValue;
+import org.visminer.web.model.MetricValue;
 
 import com.google.gson.stream.JsonWriter;
 

@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.visminer.main.Visminer;
+import org.visminer.model.business.File;
 import org.visminer.model.business.Metric;
-import org.visminer.model.database.MetricValue;
+import org.visminer.model.business.Repository;
+import org.visminer.web.model.MetricValue;
 import org.visminer.web.model.Graphic;
 
 /**
@@ -27,7 +29,6 @@ public class MetricServlet extends HttpServlet {
 	 */
 	public MetricServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -36,7 +37,10 @@ public class MetricServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Visminer vm = (Visminer)session.getAttribute("visminer");
-
+		
+		Repository repo = (Repository) vm.getAnalyzer().analyzeRepository();
+		repo.start();
+		
 		String metricChosen = request.getParameter("m");
 		if(metricChosen == null){
 			metricChosen = "LOC";
@@ -51,31 +55,21 @@ public class MetricServlet extends HttpServlet {
 		}
 
 		//getting the chosen metric
-		List<Metric> chosen =  vm.getMetrics();
 		
-		//getMetricValues()
-		//getValue()
-		
-		//getting the most value from the value of the metric
-		double greater = 1;
-		for(Metric mv : chosen.get(i).getValue()){
-			//verifies that the value of metricValue is greater than the last value is set higher and the file exists because of the LOC TAG
-			if((double)mv.getValue() > greater){
-				greater = mv.getValue();
-			}
-		}
+		MetricValue mv = new MetricValue();
+		List<Metric> metrics = mv.getMetricValue(metricChosen,vm,repo);
 
 		//Get json with datas
 		Graphic g = new Graphic("chart.json");
-		String values = g.generateChart(chosen.getMetricValues(),relatedtoChosen);
+		String values = g.generateChart(metrics ,relatedtoChosen);
 		//Setting the selected chart 
 		request.setAttribute("selectedChart",chartChosen);	
 		request.setAttribute("relatedto",relatedtoChosen);	
 		request.setAttribute("values",values);	
-		request.setAttribute("greater",greater+"");
+		request.setAttribute("greater",mv.getGreater()+"");
 		request.setAttribute("metrics",vm.getMetrics());
-		request.setAttribute("metricName",chosen.getName());
-		request.setAttribute("metricDescription",chosen.getDescription());	
+		request.setAttribute("metricName",mv.getMetric().getName());
+		request.setAttribute("metricDescription",mv.getMetric().getDescription());	
 		request.getRequestDispatcher("/metric.jsp").forward(request, response);
 
 	}
@@ -84,7 +78,7 @@ public class MetricServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 }
