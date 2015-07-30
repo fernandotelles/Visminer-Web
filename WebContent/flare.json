@@ -1,25 +1,607 @@
 {
- "name": "flare",
- "children": [
-  {
-   "name": "analytics",
-   "children": [
-    {
-     "name": "cluster",
-     "children": [
-      {"name": "AgglomerativeCluster", "value": 3938},
-      {"name": "CommunityStructure", "value": 3812},
-      {"name": "HierarchicalCluster", "value": 6714},
-      {"name": "MergeEdge", "value": 743}
-     ]
-    },
-    {
-     "name": "optimization",
-     "children": [
-      {"name": "AspectRatioBanker", "value": 1000}
-     ]
-    }
-   ]
-  }
- ]
+    "name": "scribe-java",
+    "children": [
+        {
+            "name": "java.org.scribe.model",
+            "children": [
+                {
+                    "name": "RequestTest.java",
+                    "size": 3
+                },
+                {
+                    "name": "Request.java",
+                    "size": 6
+                },
+                {
+                    "name": "OAuthRequest.java",
+                    "size": 6
+                },
+                {
+                    "name": "OAuthConfig.java",
+                    "size": 14
+                },
+                {
+                    "name": "OAuthConstants.java",
+                    "size": 0
+                },
+                {
+                    "name": "Response.java",
+                    "size": 9
+                },
+                {
+                    "name": "Token.java",
+                    "size": 4
+                },
+                {
+                    "name": "Verifier.java",
+                    "size": 2
+                },
+                {
+                    "name": "ConnectionStub.java",
+                    "size": 12
+                },
+                {
+                    "name": "OAuthRequestTest.java",
+                    "size": 3
+                },
+                {
+                    "name": "ResponseTest.java",
+                    "size": 5
+                },
+                {
+                    "name": "Verb.java",
+                    "size": 0
+                },
+                {
+                    "name": "SignatureType.java",
+                    "size": 0
+                },
+                {
+                    "name": "Parameter.java",
+                    "size": 8
+                },
+                {
+                    "name": "ParameterList.java",
+                    "size": 14
+                },
+                {
+                    "name": "ParameterListTest.java",
+                    "size": 5
+                },
+                {
+                    "name": "TokenTest.java",
+                    "size": 4
+                },
+                {
+                    "name": "RequestTuner.java",
+                    "size": 1
+                }
+            ]
+        },
+        {
+            "name": "java.org.scribe.builder.api",
+            "children": [
+                {
+                    "name": "LinkedInApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "TwitterApi.java",
+                    "size": 2
+                },
+                {
+                    "name": "GoogleApi.java",
+                    "size": 2
+                },
+                {
+                    "name": "Api.java",
+                    "size": 3
+                },
+                {
+                    "name": "DefaultApi10a.java",
+                    "size": 12
+                },
+                {
+                    "name": "FoursquareApi.java",
+                    "size": 2
+                },
+                {
+                    "name": "YahooApi.java",
+                    "size": 2
+                },
+                {
+                    "name": "VimeoApi.java",
+                    "size": 2
+                },
+                {
+                    "name": "EvernoteApi.java",
+                    "size": 2
+                },
+                {
+                    "name": "YammerApi.java",
+                    "size": 2
+                },
+                {
+                    "name": "DefaultApi20.java",
+                    "size": 1
+                },
+                {
+                    "name": "FacebookApi.java",
+                    "size": 2
+                },
+                {
+                    "name": "LoveFilmApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "DropBoxApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "Foursquare2Api.java",
+                    "size": 3
+                },
+                {
+                    "name": "ConstantContactApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "VkontakteApi.java",
+                    "size": 4
+                },
+                {
+                    "name": "SinaWeiboApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "NeteaseWeibooApi.java",
+                    "size": 4
+                },
+                {
+                    "name": "SohuWeiboApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "PlurkApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "LiveApi.java",
+                    "size": 4
+                },
+                {
+                    "name": "SimpleGeoApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "SapoApi.java",
+                    "size": 5
+                },
+                {
+                    "name": "KaixinApi.java",
+                    "size": 5
+                },
+                {
+                    "name": "QWeiboApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "MeetupApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "NetProspexApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "FlickrApi.java",
+                    "size": 4
+                },
+                {
+                    "name": "ConstantContactApi2.java",
+                    "size": 2
+                },
+                {
+                    "name": "MisoApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "TumblrApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "GetGlueApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "ImgUrApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "KaixinApi20.java",
+                    "size": 4
+                },
+                {
+                    "name": "RenrenApi.java",
+                    "size": 4
+                },
+                {
+                    "name": "SinaWeiboApi20.java",
+                    "size": 5
+                },
+                {
+                    "name": "Px500Api.java",
+                    "size": 3
+                },
+                {
+                    "name": "FreelancerApi.java",
+                    "size": 5
+                },
+                {
+                    "name": "DiggApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "SkyrockApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "UbuntuOneApi.java",
+                    "size": 4
+                },
+                {
+                    "name": "MendeleyApi.java",
+                    "size": 5
+                },
+                {
+                    "name": "TrelloApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "XingApi.java",
+                    "size": 3
+                },
+                {
+                    "name": "ViadeoApi.java",
+                    "size": 4
+                },
+                {
+                    "name": "AWeberApi.java",
+                    "size": 3
+                }
+            ]
+        },
+        {
+            "name": "java.org.scribe.utils",
+            "children": [
+                {
+                    "name": "Preconditions.java",
+                    "size": 8
+                },
+                {
+                    "name": "PreconditionsTest.java",
+                    "size": 9
+                },
+                {
+                    "name": "StreamUtils.java",
+                    "size": 1
+                },
+                {
+                    "name": "StreamUtilsTest.java",
+                    "size": 2
+                },
+                {
+                    "name": "OAuthEncoder.java",
+                    "size": 3
+                },
+                {
+                    "name": "OAuthEncoderTest.java",
+                    "size": 8
+                },
+                {
+                    "name": "MapUtils.java",
+                    "size": 3
+                },
+                {
+                    "name": "MapUtilsTest.java",
+                    "size": 3
+                }
+            ]
+        },
+        {
+            "name": "java.org.scribe.extractors",
+            "children": [
+                {
+                    "name": "BaseStringExtractorImpl.java",
+                    "size": 4
+                },
+                {
+                    "name": "TokenExtractorImpl.java",
+                    "size": 2
+                },
+                {
+                    "name": "BaseStringExtractorTest.java",
+                    "size": 4
+                },
+                {
+                    "name": "AccessTokenExtractor.java",
+                    "size": 1
+                },
+                {
+                    "name": "BaseStringExtractor.java",
+                    "size": 1
+                },
+                {
+                    "name": "HeaderExtractor.java",
+                    "size": 1
+                },
+                {
+                    "name": "HeaderExtractorImpl.java",
+                    "size": 5
+                },
+                {
+                    "name": "RequestTokenExtractor.java",
+                    "size": 1
+                },
+                {
+                    "name": "HeaderExtractorTest.java",
+                    "size": 4
+                },
+                {
+                    "name": "TokenExtractorTest.java",
+                    "size": 3
+                },
+                {
+                    "name": "TokenExtractor20Impl.java",
+                    "size": 2
+                },
+                {
+                    "name": "TokenExtractor20Test.java",
+                    "size": 6
+                },
+                {
+                    "name": "JsonTokenExtractor.java",
+                    "size": 2
+                },
+                {
+                    "name": "JsonTokenExtractorTest.java",
+                    "size": 3
+                }
+            ]
+        },
+        {
+            "name": "java.org.scribe.test.helpers",
+            "children": [
+                {
+                    "name": "ObjectMother.java",
+                    "size": 1
+                }
+            ]
+        },
+        {
+            "name": "java.org.scribe.builder",
+            "children": [
+                {
+                    "name": "ServiceBuilder.java",
+                    "size": 7
+                },
+                {
+                    "name": "ServiceBuilderTest.java",
+                    "size": 5
+                }
+            ]
+        },
+        {
+            "name": "java.org.scribe.exceptions",
+            "children": [
+                {
+                    "name": "OAuthException.java",
+                    "size": 2
+                },
+                {
+                    "name": "OAuthParametersMissingException.java",
+                    "size": 1
+                },
+                {
+                    "name": "OAuthSignatureException.java",
+                    "size": 1
+                },
+                {
+                    "name": "OAuthConnectionException.java",
+                    "size": 1
+                }
+            ]
+        },
+        {
+            "name": "java.org.scribe.oauth",
+            "children": [
+                {
+                    "name": "OAuth10aServiceImpl.java",
+                    "size": 8
+                },
+                {
+                    "name": "OAuthService.java",
+                    "size": 4
+                },
+                {
+                    "name": "OAuth20ServiceImpl.java",
+                    "size": 7
+                }
+            ]
+        },
+        {
+            "name": "java.org.scribe.services",
+            "children": [
+                {
+                    "name": "HMACSha1SignatureService.java",
+                    "size": 3
+                },
+                {
+                    "name": "SignatureService.java",
+                    "size": 3
+                },
+                {
+                    "name": "TimestampService.java",
+                    "size": 2
+                },
+                {
+                    "name": "TimestampServiceImpl.java",
+                    "size": 5
+                },
+                {
+                    "name": "HMACSha1SignatureServiceTest.java",
+                    "size": 7
+                },
+                {
+                    "name": "TimestampServiceTest.java",
+                    "size": 3
+                },
+                {
+                    "name": "PlaintextSignatureService.java",
+                    "size": 2
+                },
+                {
+                    "name": "RSASha1SignatureService.java",
+                    "size": 3
+                },
+                {
+                    "name": "RSASha1SignatureServiceTest.java",
+                    "size": 3
+                },
+                {
+                    "name": "Base64Encoder.java",
+                    "size": 7
+                },
+                {
+                    "name": "CommonsEncoder.java",
+                    "size": 3
+                },
+                {
+                    "name": "DatatypeConverterEncoder.java",
+                    "size": 2
+                }
+            ]
+        },
+        {
+            "name": "java.org.scribe.examples",
+            "children": [
+                {
+                    "name": "TwitterExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "LinkedInExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "YahooExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "FoursquareExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "GoogleExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "FacebookExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "LoveFilmExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "Foursquare2Example.java",
+                    "size": 1
+                },
+                {
+                    "name": "VkontakteExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "SinaWeiboExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "NeteaseWeiboExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "SohuWeiboExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "LiveExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "MeetupExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "FlickrExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "ImgUrExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "Kaixin20Example.java",
+                    "size": 1
+                },
+                {
+                    "name": "RenrenExample.java",
+                    "size": 2
+                },
+                {
+                    "name": "SinaWeibo2Example.java",
+                    "size": 1
+                },
+                {
+                    "name": "Px500Example.java",
+                    "size": 1
+                },
+                {
+                    "name": "FreelancerExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "DiggExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "SkyrockExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "TrelloExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "XingExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "ViadeoExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "LinkedInExampleWithScopes.java",
+                    "size": 1
+                },
+                {
+                    "name": "AWeberExample.java",
+                    "size": 1
+                },
+                {
+                    "name": "TumblrExample.java",
+                    "size": 1
+                }
+            ]
+        }
+    ]
 }

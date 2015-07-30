@@ -2,7 +2,7 @@ package org.visminer.web.model;
 
 import java.util.List;
 
-import org.visminer.model.File;
+import org.visminer.model.business.File;
 
 public class Package {
 	private String name;

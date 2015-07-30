@@ -30,9 +30,9 @@ public class VisminerWeb {
 		visminer.configure(path);
 		visminer.configureMetrics(metricPath);
 		
-		visminer.getAnalyzer().setRepositoryName("visminer")
-		                      .setRepositoryPath("/home/fernandoteles/Visminer/.git")
-		                      .setRepositoryRemoteName("visminer")
+		visminer.getAnalyzer().setRepositoryName("scribe-java")
+		                      .setRepositoryPath("/home/fernandoteles/scribe-java/.git")
+		                      .setRepositoryRemoteName("scribe-java")
 		                      .setRepositoryRemoteOwner("fernandotelles")
 		                      .setRepositoryRemoteType(RemoteServiceType.GITHUB)
 		                      .setRepositoryType(RepositoryType.GIT);
