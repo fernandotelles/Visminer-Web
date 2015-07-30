@@ -74,11 +74,20 @@
     <url-pattern>/developer.do</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>FileServlet</servlet-name>
-  	<servlet-class>org.visminer.web.servlet.FileServlet</servlet-class>
+    <servlet-name>FileServlet</servlet-name>
+    <servlet-class>org.visminer.web.servlet.FileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>FileServlet</servlet-name>
-  	<url-pattern>/files.do</url-pattern>
+    <servlet-name>FileServlet</servlet-name>
+    <url-pattern>/files.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>AjaxServlet</servlet-name>
+  	<servlet-class>org.visminer.web.servlet.AjaxServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AjaxServlet</servlet-name>
+  	<url-pattern>/getData.do</url-pattern>
   </servlet-mapping>
 </web-app>

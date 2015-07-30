@@ -17,6 +17,7 @@
 <script src="js/d3.v3.min.js"></script>
 <script src="js/jquery-2.1.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/visminer.js"></script>
 
 <style>
 
@@ -86,10 +87,19 @@ form {
 }
 
 .dev:hover{
-
+	text-decoration: underline;
+	color: black;
+	font-size: 18px;
+	cursor: pointer;
 }
 
-.dev
+.dev{
+	text-transform: capitalize;
+}
+
+dd{
+	height: 26px;
+}
 
 #navtop{
 
@@ -97,9 +107,37 @@ form {
 }
 
 #jumbo{
-	padding: 20px 30px 20px 30px;
+	padding: 10px 20px;
+	margin: 0px 0px 20px 0px;
 }
 
+
+#devPanel{
+	padding: 0px;
+}
+
+#devPanel-body{
+	overflow: scroll;
+}
+
+#visPanel{
+	padding: 0px;
+}
+
+#visPanel-body{
+
+}
+
+#statsPanel{
+	visibility: hidden;
+	display: none;
+}
+
+.panel-pin{
+	position: relative;
+	height: 1px;
+	
+}
 </style>
 
 </head>
@@ -131,92 +169,136 @@ form {
 	</div>
 	
 	<!-- Lista dos Desenvolvedores -->
-	<div class="container col-md-2">
+	<div id="devPanel" class="container col-md-2">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"> 
 					Desenvolvedores
 				</h3>
 			</div>
-			<div class="panel-body">
+			<div id="devPanel-body" class="panel-body panel-pin">
 				<dl> 
 					<c:forEach items="${committers}" var="committer">
-						<dd id="id_dev"class="dev">${committer.name}</dd>
+						<dd id="${committer.name}"class="dev" onclick="getCommitsByCommitterID(this)">${committer.name}</dd>
 					</c:forEach>
 				</dl>
 			</div>
-			<div class="panel-footer">
+			<!-- <div class="panel-footer">
 				<p>Footer</p>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<!-- Visualização -->
-	<div class="container col-md-6">
+	<div class="container col-md-10">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"> 
 					Visualização
 				</h3>
 			</div>
-			<div id="visu" class="panel-body">
-				<div class="container col-md-12">
-					<div id="chart" class="col-md-12">
-					</div>
-				</div>
+			<div id="visu" class="panel-body panel-pin">
+				
 			</div>
 			<!-- <div class="panel-footer">
 				<p> footer </p>
 			</div> -->
 		</div>
 	</div>
-	
-	<div class="container col-md-4">
+	<div id="hidden"></div>
+	<!-- Painel de estatisticas -->
+	<div id="statsPanel" class="container col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"> 
 					Outro Panel
 				</h3>
 			</div>
-			<div class="panel-body">
+			<div class="panel-body panel-pin ">
 				<p>=D</p>
 			</div>
-			<div class="panel-footer">
+			<!-- <div class="panel-footer">
 				<p> Footer </p>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	
 </div>
 
 <script>
-var data;
+/* var data;
 var color = d3.scale.category20c();
 var temp;
 
 var width = document.getElementById('chart').offsetWidth;
+ */
 
-d3.json("flare10.json",function(error,json){
-	if(error) 
-		return console.warn(error);
-	data = json;
-	
-	values = d3.values(data);
-	var maxsize = d3.max(values);
-	//console.log(maxsize);
-	var x = d3.scale.linear()
-	.domain([0, maxsize])
-	.range([0, width]);
+ 
+/* var margin = {top: 40, right: 10, bottom: 10, left: 10},
+width = 960 - margin.left - margin.right,
+height = 500 - margin.top - margin.bottom; */
 
-	d3.select("#chart")
-	.selectAll("div")
-		.data(values)
-	.enter().append("div")
-		.style("width", function(d){ return x(d) + "px"; })
-		.style("background", function(d){ return color(d) })
-		.style("margin","0px 0px 1px 0px")
-		.text(function(d){ return d; });
+var altura = window.innerHeight - document.getElementById("navtop").offsetHeight - 
+document.getElementById("jumbo").offsetHeight - document.getElementsByClassName("panel-heading")[0].offsetHeight - 
+45;
+
+//document.getElementById("visu").style.height = altura;
+var panels = document.getElementsByClassName("panel-pin");
+
+var i;
+
+for(i = 0; i < panels.length; i++){
+	panels[i].style.height = altura +"px";
+}
+
+var largura = document.getElementById("visu").offsetWidth;
+ 
+var color = d3.scale.category20c();
+
+var treemap = d3.layout.treemap()
+.size([largura - 30, altura -30])
+.sticky(true)
+.value(function(d) { return d.size; });
+
+var div = d3.select("#visu").append("div")
+.style("position", "relative")
+.style("width", largura + "px")
+.style("height", altura + "px")
+.attr("class","container col-md-12");
+//.style("left", margin.left + "px")
+//.style("top", margin.top + "px");
+
+d3.json("flare.json", function(error, root) {
+if (error) throw error;
+
+var node = div.datum(root).selectAll(".node")
+  .data(treemap.nodes)
+.enter().append("div")
+  .attr("class", "node")
+  .attr("id",function(d){return d.children ? null : d.name;})
+  .call(position)
+  .style("background", function(d) { return d.children ? color(d.name) : null; })
+  .style("cursor","pointer")
+  .text(function(d) { return d.children ? null : d.name; });
+
+d3.selectAll("input").on("change", function change() {
+var value = this.value === "count"
+    ? function() { return 1; }
+    : function(d) { return d.size; };
+
+node
+    .data(treemap.value(value).nodes)
+  .transition()
+    .duration(1500)
+    .call(position);
+});
 });
 
+function position() {
+this.style("left", function(d) { return d.x + "px"; })
+  .style("top", function(d) { return d.y + "px"; })
+  .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
+  .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
+}
 
 </script>
 

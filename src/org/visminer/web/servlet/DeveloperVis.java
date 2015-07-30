@@ -18,7 +18,6 @@ import org.visminer.main.Visminer;
 import org.visminer.model.business.Commit;
 import org.visminer.model.business.Committer;
 import org.visminer.model.business.Repository;
-
 import org.visminer.web.javascript.ExportToJavascript;
 
 /**
@@ -63,6 +62,7 @@ public class DeveloperVis extends HttpServlet {
 		
 		populateJson(path,committers,vm);
 		
+		showFiles(repo);
 		request.setAttribute("committers", committers);
 		request.getRequestDispatcher("/developer.jsp").forward(request,response);
 	}
@@ -144,6 +144,37 @@ public class DeveloperVis extends HttpServlet {
 			}
 			 
 		
+	}
+	
+	public void showFiles(Repository repository){
+		String file[];
+		for(org.visminer.model.business.File f: repository.getFiles()){
+			if(f.getPath().contains("src")){
+				
+				System.out.print("Package: ");	
+				showPackages(f.getPath());
+				
+				file = f.getPath().split("/"); 
+				System.out.println("File: " + file[file.length - 1]);
+				System.out.println("------------");
+			}
+		}
+		
+	}
+	
+	public void showPackages(String str){
+		
+		if (str.contains("src")){
+			String s[] = str.split("/");
+			String pack = "";
+			for(int i = 0; i < s.length; i++){
+				if(!s[i].contains(".java")){
+					pack += s[i]+".";
+				}
+				
+			}
+			System.out.println(pack);
+		}
 	}
 
 }

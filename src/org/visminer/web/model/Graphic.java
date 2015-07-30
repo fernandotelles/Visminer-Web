@@ -81,7 +81,7 @@ public class Graphic {
 
 	private void putObject(JsonWriter writer,String name, String value) throws IOException{
 		writer.beginObject(); // {
-		writer.name("name").value(name); 
+		writer.name("name").value(name);
 		writer.name("size").value(value);
 		writer.endObject(); // }
 	}
@@ -92,4 +92,6 @@ public class Graphic {
 		JSONObject jsonObject = (JSONObject) obj;
 		return jsonObject.toJSONString();
 	}
+	
+	
 }
