@@ -93,11 +93,6 @@ form {
 	cursor: pointer;
 }
 
-.dev:selected{
-	text-decoration: underline;
-	color: black;
-}
-
 .dev{
 	text-transform: capitalize;
 }
@@ -114,6 +109,7 @@ dd{
 #jumbo{
 	padding: 10px 20px;
 	margin: 0px 0px 20px 0px;
+<<<<<<< HEAD
 }
 
 
@@ -129,6 +125,23 @@ dd{
 	padding: 0px;
 }
 
+=======
+}
+
+
+#devPanel{
+	padding: 0px;
+}
+
+#devPanel-body{
+	overflow: scroll;
+}
+
+#visPanel{
+	padding: 0px;
+}
+
+>>>>>>> d416a9d63efd80e4322e5105525176324a54c868
 #visPanel-body{
 
 }
